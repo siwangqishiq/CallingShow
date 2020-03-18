@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnOpen;
     TextView tvDesc;
 
-    Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        intent = new Intent(getApplicationContext(), PhoneListenService.class);
-        startService(intent);
-
         if(!isIgnoreBatteryOptimizations()){
             requestIgnoreBatteryOptimizations();
         }
+
+        findViewById(R.id.start_btn).setOnClickListener((v)->{
+            Intent intent = new Intent(getApplicationContext(), PhoneListenService.class);
+            startService(intent);
+        });
+
+        findViewById(R.id.close_btn).setOnClickListener((v)->{
+            Intent intent = new Intent(getApplicationContext(), PhoneListenService.class);
+            stopService(intent);
+        });
     }
 
     public void requestIgnoreBatteryOptimizations() {

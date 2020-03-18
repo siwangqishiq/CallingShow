@@ -14,12 +14,13 @@ import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+
 import androidx.annotation.RequiresApi;
 
 public class PhoneListenService extends Service {
     private static final String TAG = "PhoneListenService";
 
-    int NOTIFICATION_ID =  "PhoneListenService".hashCode();
+    int NOTIFICATION_ID = "PhoneListenService".hashCode();
 
     // 电话管理者对象
     private TelephonyManager mTelephonyManager;
@@ -31,18 +32,23 @@ public class PhoneListenService extends Service {
         mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         phoneCallListener = new MyPhoneCallListener();
         phoneCallListener.setPhoneListener(number -> {
-            if (!TextUtils.isEmpty(number)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (Settings.canDrawOverlays(getApplicationContext())) {
-                        WindowsUtils.showPopupWindow(getApplicationContext(), "马上办来电秀\n" + "号码:" + number);
-                    }
-                } else {
-                    WindowsUtils.showPopupWindow(getApplicationContext(), "马上办来电秀\n" + "号码:" + number);
+            if(TextUtils.isEmpty(number))
+                return;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(getApplicationContext())) {
+                    callingShowView(number);
                 }
+            } else {
+                callingShowView(number);
             }
         });
         mTelephonyManager.listen(phoneCallListener, PhoneStateListener.LISTEN_CALL_STATE);
         super.onCreate();
+    }
+
+    private void callingShowView(final String number) {
+        WindowsUtils.showPopupWindow(getApplicationContext(), "马上办来电秀\n" + "号码:" + number);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class PhoneListenService extends Service {
         }
         builder.setSmallIcon(R.mipmap.ic_launcher_round).setContentText("来电秀").setOngoing(true)
                 .setContentTitle("来电秀").setContentIntent(pendIntent);
-        startForeground(NOTIFICATION_ID , builder.build());
+        startForeground(NOTIFICATION_ID, builder.build());
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -75,5 +81,11 @@ public class PhoneListenService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTelephonyManager.listen(phoneCallListener, PhoneStateListener.LISTEN_NONE);
     }
 }
