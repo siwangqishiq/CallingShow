@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 在 屏幕最顶部显示 view-->
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
-
     <!-- 申请将应用加入白名单-->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
@@ -43,11 +42,6 @@
         </activity>
 
         <!--广播捕获-->
-        <receiver android:name=".PhoneReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".PhoneListenService"

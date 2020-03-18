@@ -1,7 +1,5 @@
 package com.xinlan.callingshow;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,10 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.xinlan.callingshow.keepalive.KeepAliveWork;
-import com.yanzhenjie.permission.Action;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RequestExecutor;
 import com.yanzhenjie.permission.runtime.Permission;
 
@@ -68,13 +65,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-
     /**
      * 设置弹窗应用上层显示
      */
@@ -116,22 +106,24 @@ public class MainActivity extends AppCompatActivity {
      * 要从 onCallStateChanged() 中读取电话号码，只需要 READ_CALL_LOG 权限。 不需要 READ_PHONE_STATE 权限。
      */
     private void initPermission() {
-        AndPermission.with(this)
-                .runtime()
-                .permission(Permission.READ_CALL_LOG, Permission.READ_PHONE_STATE)
-                .rationale((Context context, List<String> data, RequestExecutor executor) -> {
-                    //拒绝一次后重试
-                    executor.execute();
-                })
-                .onGranted(permission -> {
-                    //权限调用成功后的回调
-
-                })
-                .onDenied(permissions -> {
-                    //权限调用失败后的回调
-                    //finish();
-                })
-                .start();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Permission.READ_CALL_LOG , Permission.READ_PHONE_STATE} ,101);
+        }
+//        AndPermission.with(this)
+//                .runtime()
+//                .permission(Permission.READ_CALL_LOG, Permission.READ_PHONE_STATE)
+//                .rationale((Context context, List<String> data, RequestExecutor executor) -> {
+//                    //拒绝一次后重试
+//                    executor.execute();
+//                })
+//                .onGranted(permission -> {
+//                    //权限调用成功后的回调
+//                })
+//                .onDenied(permissions -> {
+//                    //权限调用失败后的回调
+//                    //finish();
+//                })
+//                .start();
     }
 
     @Override

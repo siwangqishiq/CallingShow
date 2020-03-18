@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xinlan.floatwindow">
+
+    <activity
+        android:name="com.xinlan.floatwindow.FloatActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:launchMode="standard"
+        android:theme="@style/permission_PermissionActivity"
+        android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+</manifest>

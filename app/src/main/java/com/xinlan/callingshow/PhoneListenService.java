@@ -14,7 +14,6 @@ import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-
 import androidx.annotation.RequiresApi;
 
 public class PhoneListenService extends Service {
@@ -35,15 +34,14 @@ public class PhoneListenService extends Service {
             if (!TextUtils.isEmpty(number)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Settings.canDrawOverlays(getApplicationContext())) {
-                        WindowsUtils.showPopupWindow(getApplicationContext(), "移动开发部-Joh\n" + number);
+                        WindowsUtils.showPopupWindow(getApplicationContext(), "马上办来电秀\n" + "号码:" + number);
                     }
                 } else {
-                    WindowsUtils.showPopupWindow(getApplicationContext(), "移动开发部-Joh\n" + number);
+                    WindowsUtils.showPopupWindow(getApplicationContext(), "马上办来电秀\n" + "号码:" + number);
                 }
             }
         });
         mTelephonyManager.listen(phoneCallListener, PhoneStateListener.LISTEN_CALL_STATE);
-
         super.onCreate();
     }
 

@@ -46,8 +46,11 @@ public class WindowsUtils {
 
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         params.gravity = Gravity.LEFT;
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = dp2px(70);
+//        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.width = dp2px(120);
+        params.height = dp2px(100);
+//        params.x = 20;
+//        params.y = 400;
         params.format = PixelFormat.RGBA_8888;
 
         mWindowManager.addView(mView, params);
