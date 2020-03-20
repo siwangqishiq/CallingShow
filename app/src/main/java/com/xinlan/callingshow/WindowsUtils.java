@@ -44,7 +44,13 @@ public class WindowsUtils {
             params.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         }
 
-        params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        //params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+
         params.gravity = Gravity.LEFT;
 //        params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.width = dp2px(120);
